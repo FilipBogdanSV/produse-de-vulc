@@ -1,0 +1,56 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+
+<?php include 'ImageUpload.php';?>
+
+<div id="main">
+    <div class="content">
+        <h2 class="content-subhead">Adauga Anvelopa</h2>
+        <div class="form-group">
+            <input id="name" type="text" class="form-control" placeholder="Nume">
+            <input id="img_name" type="text" class="form-control" placeholder="Nume Imagine">
+            <input id="dimensions" type="text" class="form-control" placeholder="Dimensiuni">
+            <input id="description" type="text" class="form-control" placeholder="Descriere">
+            <button type="submit" class="btn btn-primary btn-lg">Adauga anvelopa</button>
+        </div>
+
+
+        <form action="ImageUpload.php" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Adaugati imaginea pentru anvelopa</label>
+                <input type="file" class="form-control-file" name="image"/>
+                <input type="submit"/>
+            </div>
+        </form>
+
+        <script>
+            $("button").click(function (e) {
+                e.preventDefault();
+                let name = $('#name').val();
+                let img_name = $('#img_name').val();
+                let dimensions = $('#dimensions').val();
+                let description = $('#description').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/api/anvelope",
+                    data: {"nume": name, "img_name": img_name, "dimensiune": dimensions, "descriere": description},
+
+                    success: function (result) {
+                        alert(result)
+                    }
+                });
+            });
+        </script>
+    </div>
+</div>
+
+</body>
+</html>
