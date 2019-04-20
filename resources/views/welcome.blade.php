@@ -53,32 +53,37 @@
 
         <div class="container mt-3">
             <h2 class="produs">Produse</h2>
+            <div class="alert alert-success">
+                <strong>Atentie!</strong> In judetele Maramures, Salaj, Bistrita si Satu Mare livrarea se face direct de
+                catre agentii nostrii, iar in restul tarii prin servicii de curierat.
+            </div>
             <br>
             <!-- Nav tabs -->
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#menu1">Camere de aer</a>
+                    <a class="nav-link" data-toggle="tab" href="#petece">Petece</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#menu2">Contragreutati echilibrat roti</a>
+                    <a class="nav-link" data-toggle="tab" href="#contragreutati">Contragreutati echilibrat roti</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#menu3">Petece</a>
+                    <a class="nav-link" data-toggle="tab" href="#valve">Valve</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#menu4">Valve</a>
+                    <a class="nav-link" data-toggle="tab" href="#anvelope">Anvelope pentru orice aplicatie</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#menu5">Diverse</a>
+                    <a class="nav-link active" data-toggle="tab" href="#camere">Camere de aer</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#menu6">Anvelope</a>
+                    <a class="nav-link" data-toggle="tab" href="#diverse">Diverse</a>
                 </li>
+
             </ul>
             <div class=" box">
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    <div id="menu1" class="container tab-pane active"><br>
+                    <div id="camere" class="container tab-pane active"><br>
                         <div class="container">
                             <div class="card" style="width:230px">
                                 <img class="card-img-top" src="img/camera-de-aer.jpg" alt="Card image"
@@ -136,19 +141,19 @@
                         </div>
                     </div>
 
-                    <div id="menu2" class="container tab-pane fade"><br>
+                    <div id="petece" class="container tab-pane fade"><br>
                     </div>
 
-                    <div id="menu3" class="container tab-pane fade"><br>
+                    <div id="contragreutati" class="container tab-pane fade"><br>
                     </div>
 
-                    <div id="menu4" class="container tab-pane fade"><br>
+                    <div id="valve" class="container tab-pane fade"><br>
                     </div>
 
-                    <div id="menu5" class="container tab-pane fade"><br>
+                    <div id="anvelope" class="container tab-pane fade"><br>
                     </div>
 
-                    <div id="menu6" class="container tab-pane fade"><br>
+                    <div id="diverse" class="container tab-pane fade"><br>
                     </div>
                 </div>
             </div>
@@ -165,7 +170,7 @@
             success: function (data) {
                 data.forEach(anvelopa => {
 
-                    $("#menu6").append(
+                    $("#anvelope").append(
                         "<div class=\"container\">\n" +
                         "                            <div class=\"card\" style=\"width:230px\">\n" +
                         "                                <img class=\"card-img-top\" src=\"pozeanvelope/" + anvelopa.img_name + "\" alt=\"Card image\"\n" +
@@ -210,10 +215,64 @@
             }
 
         });
+    })
+</script>
 
+<script>
+    $(document).ready(function () {
+        $.get({
+            url: "/api/products",
+            success: function (data) {
+                data.forEach(produs => {
+
+                    $("#" + produs.type).append(
+                        "<div class=\"container\">\n" +
+                        "                            <div class=\"card\" style=\"width:230px\">\n" +
+                        "                                <img class=\"card-img-top\" src=\"pozeanvelope/" + produs.img_name + "\" alt=\"Card image\"\n" +
+                        "                                     style=\"width:100%\">\n" +
+                        "                                <div class=\"card-body\">\n" +
+                        "                                    <h4 class=\"card-title\">" + produs.name + "</h4>\n" +
+                        "                                    <a href=\"#\" class=\"btn btn-primary\">Solicita </a>\n" +
+                        "                                    <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\"\n" +
+                        "                                            data-target=\"#" + produs.name.replace(/\s/g, "") + "\">\n" +
+                        "                                        Detalii\n" +
+                        "                                    </button>\n" +
+                        "                                </div>\n" +
+                        "                            </div>" +
+
+                        "       <div class=\"modal\" id=\"" + produs.name.replace(/\s/g, "") + "\">\n" +
+                        "                                <div class=\"modal-dialog\">\n" +
+                        "                                    <div class=\"modal-content\">\n" +
+                        "\n" +
+                        "                                        <!-- Modal Header -->\n" +
+                        "                                        <div class=\"modal-header\">\n" +
+                        "                                            <h4 class=\"modal-title\">\n" +
+                        "                                            " + produs.name + "</h4>\n" +
+                        "                                            <button type=\"button\" class=\"close\" data-dismiss=\"modal\">&times;</button>\n" +
+                        "                                        </div>\n" +
+                        "\n" +
+                        "                                        <!-- Modal body -->\n" +
+                        "                                        <div class=\"modal-body\">\n" +
+                        "                                            " + "Descriere : " + produs.description + "\n" +
+                        "                                        </div>\n" +
+                        "                                        <!-- Modal footer -->\n" +
+                        "                                        <div class=\"modal-footer\">\n" +
+                        "                                            <button type=\"button\" class=\"btn btn-danger\" data-dismiss=\"modal\">Close\n" +
+                        "                                            </button>\n" +
+                        "                                        </div>\n" +
+                        "\n" +
+                        "                                    </div>\n" +
+                        "                                </div>\n" +
+                        "                            </div>"
+                    );
+                })
+            }
+
+        });
 
     })
 </script>
+
 
 
 <div class="modal" id="solicitaModal">
@@ -237,7 +296,11 @@
                         </label>
                         <label>
                             Numar de telefon
-                            <input type="text" name="Numar">
+                            <input type="text" name="numar">
+                        </label>
+                        <label>
+                            Nume
+                            <input type="text" name="nume">
                         </label>
                         <input type="submit"/>
                     </div>
